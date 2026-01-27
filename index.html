@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>ClinicPayTek - Demo</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #F2F7F7;
+}
+
+/* LOGIN */
+#login, #app {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#app {
+  display: none;
+}
+
+.login-box {
+  background: #fff;
+  width: 340px;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.15);
+  text-align: center;
+}
+
+.login-box h2 {
+  margin-top: 0;
+  color: #1F4F5A;
+}
+
+.login-box input, .login-box button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.login-box button {
+  background: #1F4F5A;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.login-box button:hover {
+  background: #183E46;
+}
+
+/* APP */
+.sidebar {
+  width: 240px;
+  background: #1F4F5A;
+  color: #fff;
+  padding: 20px;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+}
+
+.sidebar div {
+  padding: 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.sidebar div:hover {
+  background: rgba(255,255,255,.2);
+}
+
+.main {
+  flex: 1;
+  padding: 25px;
+  background: #F9FBFB;
+  overflow-y: auto;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.05);
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="login-box">
+    <h2>ClinicPayTek</h2>
+    <input id="email" placeholder="E-mail">
+    <input id="senha" type="password" placeholder="Senha">
+    <button id="btnLogin">Entrar</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="sidebar">
+    <h3>ClinicPayTek</h3>
+    <div onclick="showPage('dashboard')">Dashboard</div>
+    <div onclick="showPage('agenda')">Agenda</div>
+    <div onclick="showPage('pacientes')">Pacientes</div>
+    <div onclick="showPage('profissionais')">Profissionais</div>
+    <div onclick="showPage('clinicas')">Clínicas Parceiras</div>
+    <div onclick="showPage('procedimentos')">Procedimentos</div>
+    <div onclick="showPage('financeiro')">Financeiro</div>
+    <div onclick="showPage('split')">Split</div>
+    <div onclick="showPage('nfs')">Notas Fiscais</div>
+    <div onclick="logout()">Sair</div>
+  </div>
+
+  <div class="main">
+
+    <div id="dashboard" class="page active">
+      <div class="card">
+        <h2>Dashboard</h2>
+        <p>Sistema ClinicPayTek – DEMO</p>
+      </div>
+    </div>
+
+    <div id="agenda" class="page">
+      <div class="card">
+        <h2>Agenda</h2>
+        <input placeholder="Paciente">
+        <input type="date">
+        <input type="time">
+      </div>
+    </div>
+
+    <div id="pacientes" class="page">
+      <div class="card">
+        <h2>Cadastro de Pacientes</h2>
+        <input placeholder="Nome">
+        <input placeholder="CPF">
+        <input placeholder="Telefone">
+        <input placeholder="E-mail">
+        <textarea placeholder="Observações"></textarea>
+      </div>
+    </div>
+
+    <div id="profissionais" class="page">
+      <div class="card">
+        <h2>Profissionais</h2>
+        <input placeholder="Nome">
+        <input placeholder="Especialidade">
+        <input placeholder="Split (%)">
+      </div>
+    </div>
+
+    <div id="clinicas" class="page">
+      <div class="card">
+        <h2>Clínicas Parceiras</h2>
+        <input placeholder="Nome da Clínica">
+        <input placeholder="CNPJ">
+      </div>
+    </div>
+
+    <div id="procedimentos" class="page">
+      <div class="card">
+        <h2>Procedimentos</h2>
+        <input placeholder="Descrição">
+        <input placeholder="Valor">
+        <input placeholder="Split por Procedimento (%)">
+      </div>
+    </div>
+
+    <div id="financeiro" class="page">
+      <div class="card">
+        <h2>Financeiro</h2>
+        <input placeholder="Entrada">
+        <input placeholder="Saída">
+        <select>
+          <option>Relatórios</option>
+          <option>Diário</option>
+          <option>Mensal</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="split" class="page">
+      <div class="card">
+        <h2>Split de Pagamento</h2>
+        <input placeholder="Percentual (%)">
+        <input placeholder="Valor Fixo">
+        <select>
+          <option>Por Usuário</option>
+          <option>Por Procedimento</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="nfs" class="page">
+      <div class="card">
+        <h2>Notas Fiscais</h2>
+        <select>
+          <option>Emissão Manual</option>
+          <option>Emissão Automática (Focus)</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.getElementById("btnLogin").addEventListener("click", function () {
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
+
+  if (!email || !senha) {
+    alert("Informe e-mail e senha");
+    return;
+  }
+
+  document.getElementById("login").style.display = "none";
+  document.getElementById("app").style.display = "flex";
+});
+
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function logout() {
+  document.getElementById("app").style.display = "none";
+  document.getElementById("login").style.display = "flex";
+}
+</script>
+
+</body>
+</html>
